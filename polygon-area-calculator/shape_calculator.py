@@ -38,7 +38,6 @@ class Square(Rectangle):
 
     def __init__(self, side):
         super().__init__(side, side)
-        self.width = self.height = side
 
     def set_side(self, new_side):
         self.width = self.height = new_side
