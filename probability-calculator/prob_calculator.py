@@ -1,14 +1,14 @@
 import random
-
+import copy
 
 class Hat:
 
     def __init__(self, **colours):
         self.contents = sum([[color] * amount for color, amount in colours.items()], [])
-        self.copy = self.contents[:]
+        self.copy = self.contents.copy()
 
     def draw(self, number):
-        self.contents = self.copy[:]
+        self.contents = self.copy.copy()
         if number >= len(self.contents):
             return self.contents
         choices = random.choices(self.contents, k=number)
@@ -23,8 +23,16 @@ def experiment(hat, expected_balls, num_balls_drawn, num_experiments):
     expected_balls = sum([[color] * amount for color, amount in expected_balls.items()], [])
     i = 0
     while i < num_experiments:
-        drawed_balls = hat.draw(num_balls_drawn) 
-        if all(item in drawed_balls for item in expected_balls):
+        drawed_balls = hat.draw(num_balls_drawn)
+        checked, is_matching = [], []
+        for ball in expected_balls:
+            if ball not in checked:
+                if expected_balls.count(ball) <= drawed_balls.count(ball):
+                    is_matching.append(1)
+                else:
+                    is_matching.append(0)
+                checked.append(ball)
+        if all(is_matching):
             m += 1
         i += 1
     return m / num_experiments
