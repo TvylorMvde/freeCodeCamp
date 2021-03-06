@@ -38,19 +38,9 @@ class Square(Rectangle):
 
     def __init__(self, side):
         super().__init__(side, side)
-        self.width = self.height = side
 
     def set_side(self, new_side):
         self.width = self.height = new_side
-
-    def get_area(self):
-        return self.width ** 2
-
-    def get_perimeter(self):
-        return 4 * self.width
-
-    def get_diagonal(self):
-        return self.width * sqrt(2)
 
     def __str__(self):
         return f"Square(side={self.width})"
